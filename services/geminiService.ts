@@ -1,10 +1,11 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { MissionBriefing } from "../types.ts";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const generateMissionBriefing = async (): Promise<MissionBriefing> => {
   try {
+    // Instantiate inside the function to ensure process.env.API_KEY is accessed at call time
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: "Generate a cool, arcade-style mission briefing for a sci-fi plane shooter game.",
@@ -29,6 +30,7 @@ export const generateMissionBriefing = async (): Promise<MissionBriefing> => {
     return JSON.parse(text) as MissionBriefing;
   } catch (error) {
     console.error("Failed to generate mission:", error);
+    // Fallback if API fails or key is missing
     return {
       name: "Operation: Fallback",
       objective: "Defend the sector from unknown hostiles.",
