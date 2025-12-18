@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import GameCanvas from './components/GameCanvas';
-import MainMenu from './components/MainMenu';
-import { generateMissionBriefing } from './services/geminiService';
-import { GameState, MissionBriefing } from './types';
+import GameCanvas from './components/GameCanvas.tsx';
+import MainMenu from './components/MainMenu.tsx';
+import { generateMissionBriefing } from './services/geminiService.ts';
+import { GameState, MissionBriefing } from './types.ts';
 import { Volume2, VolumeX } from 'lucide-react';
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(GameState.LOADING_MISSION);
   const [score, setScore] = useState(0);
   const [briefing, setBriefing] = useState<MissionBriefing | null>(null);
-  const [soundEnabled, setSoundEnabled] = useState(false); // Placeholder for sound logic
+  const [soundEnabled, setSoundEnabled] = useState(false);
 
-  // Initial Load
   useEffect(() => {
     loadMission();
   }, []);
@@ -29,22 +28,17 @@ const App: React.FC = () => {
   };
 
   const restartGame = () => {
-    // Optionally load a new mission on restart or just keep the same one
-    // Let's generate a new one for variety
     loadMission();
   };
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 relative font-sans select-none">
-      
-      {/* Background Ambience */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800 via-slate-950 to-black opacity-80"></div>
         <div className="absolute w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px] top-[-100px] left-[-100px]"></div>
         <div className="absolute w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[100px] bottom-[-100px] right-[-100px]"></div>
       </div>
 
-      {/* Header UI */}
       <div className="z-10 w-full max-w-4xl flex justify-between items-center mb-4 px-4">
         <div className="flex flex-col">
             <h1 className="text-xl md:text-2xl font-display font-bold tracking-widest text-white shadow-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">
@@ -67,7 +61,6 @@ const App: React.FC = () => {
         </div>
       </div>
 
-      {/* Game Container */}
       <div className="relative z-0 shadow-2xl">
         <GameCanvas 
             gameState={gameState} 
@@ -76,7 +69,6 @@ const App: React.FC = () => {
             missionName={briefing?.name || 'Unknown'}
         />
 
-        {/* Menu Overlay */}
         {(gameState === GameState.MENU || gameState === GameState.LOADING_MISSION) && (
             <MainMenu 
                 onStart={startGame} 
@@ -85,7 +77,6 @@ const App: React.FC = () => {
             />
         )}
 
-        {/* Game Over Overlay */}
         {gameState === GameState.GAME_OVER && (
              <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-20 backdrop-blur-sm">
                 <div className="text-center p-8 border-y-4 border-red-600 bg-black/50 w-full animate-in fade-in zoom-in duration-300">
@@ -106,7 +97,6 @@ const App: React.FC = () => {
         )}
       </div>
 
-      {/* Footer */}
       <div className="mt-4 text-slate-600 text-xs font-mono z-10">
         AI ASSISTED WINGMAN // GEMINI API CONNECTED
       </div>

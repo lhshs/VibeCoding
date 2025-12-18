@@ -1,5 +1,5 @@
 import React from 'react';
-import { MissionBriefing } from '../types';
+import { MissionBriefing } from '../types.ts';
 import { Plane, Skull, Crosshair } from 'lucide-react';
 
 interface MainMenuProps {
@@ -14,7 +14,6 @@ const MainMenu: React.FC<MainMenuProps> = ({ onStart, loading, briefing, lastSco
     <div className="absolute inset-0 flex items-center justify-center bg-slate-900/90 z-10 backdrop-blur-sm p-4">
       <div className="max-w-md w-full bg-slate-800 border-2 border-blue-500 rounded-xl p-8 shadow-[0_0_50px_rgba(59,130,246,0.5)] text-center relative overflow-hidden">
         
-        {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-cyan-400 to-blue-500" />
         <div className="absolute -right-10 -top-10 text-slate-700 opacity-20 transform rotate-12">
             <Plane size={150} />

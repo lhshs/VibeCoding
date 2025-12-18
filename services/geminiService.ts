@@ -1,7 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { MissionBriefing } from "../types";
+import { MissionBriefing } from "../types.ts";
 
-// Initialize Gemini AI
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateMissionBriefing = async (): Promise<MissionBriefing> => {
@@ -30,7 +29,6 @@ export const generateMissionBriefing = async (): Promise<MissionBriefing> => {
     return JSON.parse(text) as MissionBriefing;
   } catch (error) {
     console.error("Failed to generate mission:", error);
-    // Fallback if API fails
     return {
       name: "Operation: Fallback",
       objective: "Defend the sector from unknown hostiles.",
